@@ -45,7 +45,7 @@ namespace API
             //This is to configures MyContext to connect to a SSMS
             //"Connection" has created in appsetings.json
             services.AddDbContext<MyContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+            options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Connection")));
 
             //This is to handled reference loop eror to Json format
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

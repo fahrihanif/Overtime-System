@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,6 +25,7 @@ namespace API.Models
         //Relation
         public virtual Job Job { get; set; }
         public virtual Account Account { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EmployeeOvertime> EmployeeOvertimes { get; set; }
     }
 

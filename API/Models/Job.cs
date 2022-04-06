@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,6 +18,7 @@ namespace API.Models
         public int MaxSalary { get; set; }
 
         //Relation
+        [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }
