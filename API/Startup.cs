@@ -70,6 +70,16 @@ namespace API
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+            //Add Cors
+            services.AddCors(c =>
+            {
+                c.AddDefaultPolicy(options => options
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
