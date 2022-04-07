@@ -11,8 +11,6 @@ namespace API.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public DateTime BreakOvertime { get; set; }
-        [Required]
         public DateTime StartOvertime { get; set; }
         [Required]
         public DateTime EndOvertime { get; set; }
