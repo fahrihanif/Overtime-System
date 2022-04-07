@@ -17,6 +17,28 @@ namespace API.Repository.Data
             _context = myContext;
         }
 
+        public IEnumerable ListOvertime()
+        {
+            var x = _context.EmployeeOvertimes.Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new
+            {
+                NIK = eo.EmployeeId,
+                Submit = o.SubmitDate.ToString("dd/MMM/yyyy"),
+                Total = (eo.EndOvertime - eo.StartOvertime).TotalMinutes,
+                Paid = o.Paid,
+                Type = o.Type.ToString(),
+                Status = o.Status.ToString()
+            }).ToList();
+
+            return x.GroupBy(g => g.NIK).Select(s => new
+            {
+                NIK = s.Key,
+                Submit = s.Select(s => s.Submit).First(),
+                Total = s.Sum(s => s.Total),
+                Paid = s.Sum(s => s.Paid),
+                Type = s.Select(s => s.Type).First(),
+                Status = s.Select(s => s.Status).First(),
+            });
+        }
         public IEnumerable RemainingOvertime()
         {
             var x = _context.EmployeeOvertimes.Select(s => new
@@ -28,7 +50,6 @@ namespace API.Repository.Data
             return x.GroupBy(g => g.NIK).Select(s => new
             {
                 NIK = s.Key,
-                Total = s.Sum(s => s.Total),
                 Remaining = 2400 - s.Sum(s => s.Total)
             });
         }
@@ -53,7 +74,6 @@ namespace API.Repository.Data
                     {
                         StartOvertime = item.StartOvertime,
                         EndOvertime = item.EndOvertime,
-                        BreakOvertime = item.BreakOvertime,
                         Description = item.Description,
                         OvertimeId = o.Id,
                         EmployeeId = item.EmployeeId

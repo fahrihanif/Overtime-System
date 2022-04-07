@@ -22,6 +22,22 @@ namespace API.Controllers
             _repository = repository;
         }
 
+        [HttpGet("List")]
+        public ActionResult ListOvertime()
+        {
+            try
+            {
+                var post = _repository.ListOvertime();
+                return post == null
+                    ? NotFound(new { message = "Data Failed to Change Please Check Again" })
+                    : (ActionResult)Ok(_repository.ListOvertime());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         [HttpGet("Remaining")]
         public ActionResult RemainingOvertime()
         {
