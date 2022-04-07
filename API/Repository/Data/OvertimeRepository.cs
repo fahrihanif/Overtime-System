@@ -29,9 +29,9 @@ namespace API.Repository.Data
                 Status = o.Status.ToString()
             }).ToList();
 
-            return x.GroupBy(g => g.NIK).Select(s => new
+            return x.GroupBy(g => new { g.NIK, g.Submit }).Select(s => new
             {
-                NIK = s.Key,
+                NIK = s.Key.NIK,
                 Submit = s.Select(s => s.Submit).First(),
                 Total = s.Sum(s => s.Total),
                 Paid = s.Sum(s => s.Paid),
