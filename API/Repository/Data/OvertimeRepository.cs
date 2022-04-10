@@ -42,6 +42,29 @@ namespace API.Repository.Data
             };
         }
 
+        public IEnumerable ListOvertimeById(string id)
+        {
+            var x = _context.EmployeeOvertimes.Where(w => w.EmployeeId == id).Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new
+            {
+                NIK = eo.EmployeeId,
+                Submit = o.SubmitDate.ToString("dd-MMM-yyyy"),
+                Total = (eo.EndOvertime - eo.StartOvertime).TotalMinutes,
+                Paid = o.Paid,
+                Type = o.Type.ToString(),
+                Status = o.Status.ToString()
+            }).ToList();
+
+            return x.GroupBy(g => new { g.NIK, g.Submit }).Select(s => new
+            {
+                NIK = s.Key.NIK,
+                Submit = s.Select(s => s.Submit).First(),
+                Total = s.Sum(s => s.Total),
+                Paid = s.Sum(s => s.Paid),
+                Type = s.Select(s => s.Type).First(),
+                Status = s.Select(s => s.Status).First(),
+            });
+        }
+
         public IEnumerable ListOvertime()
         {
             var x = _context.EmployeeOvertimes.Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new

@@ -54,6 +54,22 @@ namespace API.Controllers
                 return BadRequest(e);
             }
         }
+        
+        [HttpGet("List/{id}")]
+        public ActionResult ListOvertimeById(string id)
+        {
+            try
+            {
+                var post = _repository.ListOvertimeById(id);
+                return post == null
+                    ? NotFound(new { message = "Data Failed to Change Please Check Again" })
+                    : (ActionResult)Ok(_repository.ListOvertimeById(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
 
         [HttpGet("Remaining")]
         public ActionResult RemainingOvertime()
