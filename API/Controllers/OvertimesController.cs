@@ -22,6 +22,23 @@ namespace API.Controllers
             _repository = repository;
         }
 
+        [HttpGet("Detail")]
+        public ActionResult GetById(GetDetailOvertimeVM getDetail)
+        {
+            try
+            {
+                var get = _repository.DetailOvertime(getDetail);
+                return get == null
+                    ? NotFound(new { message = "Data Not Found" })
+                    : (ActionResult)Ok(get);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
+
         [HttpGet("List")]
         public ActionResult ListOvertime()
         {
@@ -60,9 +77,12 @@ namespace API.Controllers
             try
             {
                 var post = _repository.Request(overtime);
-                return post == 0
-                    ? NotFound(new { message = "Data Failed to Change Please Check Again" })
-                    : (ActionResult)Ok(new { message = "Overtime Requested" });
+                return post switch
+                {
+                    0 => NotFound(new { message = "Request Failed Please Check Again" }),
+                    1 => NotFound(new { message = "You Cannot Apply Overtime On The Same Date" }),
+                    _ => (ActionResult)Ok(new { message = "Overtime Requested" })
+                };
             }
             catch (Exception e)
             {
