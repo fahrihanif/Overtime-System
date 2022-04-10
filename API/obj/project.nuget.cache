@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "GNDzmnYCxHICU12NqXu5W1gmVDkqlxDWa5hRZ0us4mgRjop8XZh/pH+LbLqWMlF+qPqca9olN0HVo5BBpsH6lQ==",
+  "dgSpecHash": "uF/DrSw+gVe+jfCQuIUt2IrCxM5eWle4/jo0rQtkUiOIqKakcGQ3uZJ3YF+fzHYIWmuCncPsGd34scQF7uXEJg==",
   "success": true,
   "projectFilePath": "D:\\Kuliah\\Project\\VisualStudio\\Overtime-System\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fahri\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
+    "C:\\Users\\fahri\\.nuget\\packages\\efcore.namingconventions\\5.0.2\\efcore.namingconventions.5.0.2.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",

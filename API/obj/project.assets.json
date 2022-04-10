@@ -32,6 +32,20 @@
           "lib/netstandard1.5/Castle.Core.dll": {}
         }
       },
+      "EFCore.NamingConventions/5.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "5.0.2",
+          "Microsoft.EntityFrameworkCore.Relational": "5.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/EFCore.NamingConventions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/EFCore.NamingConventions.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -2434,6 +2448,18 @@
         "lib/netstandard1.5/Castle.Core.dll",
         "lib/netstandard1.5/Castle.Core.xml",
         "readme.txt"
+      ]
+    },
+    "EFCore.NamingConventions/5.0.2": {
+      "sha512": "5MQ2lU2cplHcjQzIeRY4NSVn7ix6pzzjEboCaRsBjavUb3HZNI96a3u1dApE/LKkPLyNJUR6s2HquX2N1qsh0Q==",
+      "type": "package",
+      "path": "efcore.namingconventions/5.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "efcore.namingconventions.5.0.2.nupkg.sha512",
+        "efcore.namingconventions.nuspec",
+        "lib/netstandard2.1/EFCore.NamingConventions.dll"
       ]
     },
     "Humanizer.Core/2.8.26": {
@@ -8064,6 +8090,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "BCrypt.Net-Core >= 1.6.0",
+      "EFCore.NamingConventions >= 5.0.2",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.8",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.0.0",
       "Microsoft.EntityFrameworkCore >= 5.0.9",
@@ -8115,6 +8142,10 @@
           "BCrypt.Net-Core": {
             "target": "Package",
             "version": "[1.6.0, )"
+          },
+          "EFCore.NamingConventions": {
+            "target": "Package",
+            "version": "[5.0.2, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
