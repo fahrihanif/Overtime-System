@@ -120,7 +120,8 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Roles = "Finance")]
+        //[Authorize(Roles = "Finance")]
+        [AllowAnonymous]
         [HttpGet("Master")]
         public ActionResult GetAllMaster()
         {
