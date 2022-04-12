@@ -94,6 +94,7 @@
                                 <table class="table align-items-center mb-0" id="tblOvertime">
                                     <thead>
                                         <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nik</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Submit</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
@@ -101,7 +102,6 @@
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-
                                         </tr>
                                     </thead>
                                     <tbody id="employee"></tbody>
@@ -166,30 +166,19 @@
 
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <table class="table table-single-select datatable-pagination" id="tblDetail" width="100%">
+                                                            <table class="table table-single-select datatable-pagination" width="100%">
                                                                 <thead>
                                                                     <tr class="align-middle text-center">
+                                                                        <th>No</th>
                                                                         <th>Start Overtime</th>
                                                                         <th>End Overtime</th>
                                                                         <th>Description</th>
-
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody id="dataOvertimes">
-                                                                    <tr class="align-middle text-center">
-                                                                        <td>1</td>
-                                                                        <td>2022001</td>
-                                                                        <td>hanif</td>
-                                                                    </tr>
-                                                                    <tr class="align-middle text-center">
-                                                                        <td>1</td>
-                                                                        <td>2022002</td>
-                                                                        <td>achmad</td>
-                                                                    </tr>
+                                                                <tbody id="tblDetail">
                                                                 </tbody>
                                                             </table>
                                                         </div>
-
                                                     </div>
                                                 </form>
                                             </div>
@@ -202,8 +191,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="accepted">Accept</button>
-                    <button type="button" class="btn btn-danger" id="rejected">Reject</button>
+                    <button type="button" class="btn btn-success approval" id="accepted">Accept</button>
+                    <button type="button" class="btn btn-danger approval" id="rejected">Reject</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
