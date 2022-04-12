@@ -89,13 +89,11 @@ namespace API.Repository.Data
         }
         public IEnumerable RemainingOvertime()
         {
-            var x = _context.EmployeeOvertimes.Select(s => new
+            return _context.Overtimes.Where(w => w.Type == Types.Weekday).Join(_context.EmployeeOvertimes, o => o.Id, eo => eo.OvertimeId, (o, eo) => new
             {
-                NIK = s.EmployeeId,
-                Total = (s.EndOvertime - s.StartOvertime).TotalHours
-            }).ToList();
-
-            return x.GroupBy(g => g.NIK).Select(s => new
+                NIK = eo.EmployeeId,
+                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours
+            }).ToList().GroupBy(g => g.NIK).Select(s => new
             {
                 NIK = s.Key,
                 Remaining = 40 - s.Sum(s => s.Total)
