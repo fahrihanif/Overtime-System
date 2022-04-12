@@ -17,7 +17,7 @@ namespace API.Repository.Data
             _context = myContext;
         }
 
-        public DetailOvertimeVM DetailOvertime(GetDetailOvertimeVM getDetail)
+        public DetailOvertimeVM DetailOvertime(string id, DateTime date)
         {
             var x = _context.Employees
                 .Join(_context.EmployeeOvertimes, e => e.NIK, eo => eo.EmployeeId, (e, eo) => new { e, eo})
@@ -29,7 +29,7 @@ namespace API.Repository.Data
                     Paid = o.Paid,
                     Type = o.Type,
                     OvertimeId = o.Id
-                }).FirstOrDefault(s => s.NIK == getDetail.NIK && s.SubmitDate == getDetail.Date);
+                }).FirstOrDefault(s => s.NIK == id && s.SubmitDate == date);
 
             return new DetailOvertimeVM { 
                 NIK = x.NIK,
@@ -47,7 +47,7 @@ namespace API.Repository.Data
             var x = _context.EmployeeOvertimes.Where(w => w.EmployeeId == id).Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new
             {
                 NIK = eo.EmployeeId,
-                Submit = o.SubmitDate.ToString("dd-MMM-yyyy"),
+                Submit = o.SubmitDate,
                 Total = (eo.EndOvertime - eo.StartOvertime).TotalMinutes,
                 Paid = o.Paid,
                 Type = o.Type.ToString(),
@@ -70,7 +70,7 @@ namespace API.Repository.Data
             var x = _context.EmployeeOvertimes.Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new
             {
                 NIK = eo.EmployeeId,
-                Submit = o.SubmitDate.ToString("dd-MMM-yyyy"),
+                Submit = o.SubmitDate,
                 Total = (eo.EndOvertime - eo.StartOvertime).TotalMinutes,
                 Paid = o.Paid,
                 Type = o.Type.ToString(),

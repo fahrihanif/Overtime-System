@@ -22,12 +22,12 @@ namespace API.Controllers
             _repository = repository;
         }
 
-        [HttpGet("Detail")]
-        public ActionResult GetById(GetDetailOvertimeVM getDetail)
+        [HttpGet("Detail/{id}/{date}")]
+        public ActionResult GetById(string id, DateTime date)
         {
             try
             {
-                var get = _repository.DetailOvertime(getDetail);
+                var get = _repository.DetailOvertime(id, date);
                 return get == null
                     ? NotFound(new { message = "Data Not Found" })
                     : (ActionResult)Ok(get);
