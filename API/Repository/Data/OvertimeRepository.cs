@@ -48,7 +48,7 @@ namespace API.Repository.Data
             {
                 NIK = eo.EmployeeId,
                 Submit = o.SubmitDate,
-                Total = (eo.EndOvertime - eo.StartOvertime).TotalMinutes,
+                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours,
                 Paid = o.Paid,
                 Type = o.Type.ToString(),
                 Status = o.Status.ToString()
@@ -71,7 +71,7 @@ namespace API.Repository.Data
             {
                 NIK = eo.EmployeeId,
                 Submit = o.SubmitDate,
-                Total = (eo.EndOvertime - eo.StartOvertime).TotalMinutes,
+                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours,
                 Paid = o.Paid,
                 Type = o.Type.ToString(),
                 Status = o.Status.ToString()
@@ -92,13 +92,13 @@ namespace API.Repository.Data
             var x = _context.EmployeeOvertimes.Select(s => new
             {
                 NIK = s.EmployeeId,
-                Total = (s.EndOvertime - s.StartOvertime).TotalMinutes
+                Total = (s.EndOvertime - s.StartOvertime).TotalHours
             }).ToList();
 
             return x.GroupBy(g => g.NIK).Select(s => new
             {
                 NIK = s.Key,
-                Remaining = 2400 - s.Sum(s => s.Total)
+                Remaining = 40 - s.Sum(s => s.Total)
             });
         }
 
