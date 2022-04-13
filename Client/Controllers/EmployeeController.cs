@@ -11,8 +11,9 @@ namespace Client.Controllers
         public IActionResult Index()
         {
             return View();
-        } 
-        public IActionResult RequestOvertime()
+        }
+
+        public IActionResult Request()
         {
             return View();
         }

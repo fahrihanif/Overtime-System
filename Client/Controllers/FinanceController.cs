@@ -12,15 +12,8 @@ namespace Client.Controllers
         {
             return View();
         }
-        public IActionResult OvertimeManagement()
-        {
-            return View();
-        }
-        public IActionResult EmployeeManagement()
-        {
-            return View();
-        } 
-        public IActionResult ProfileUser()
+
+        public IActionResult List()
         {
             return View();
         }

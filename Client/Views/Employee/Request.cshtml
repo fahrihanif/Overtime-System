@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "Request";
+    Layout = "_EmployeeLayout";
+}
+
+<main class="main-content position-relative border-radius-lg ">
+    <div class="container-fluid py-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6 style="display: inline-block">Overtime List</h6>
+                        <button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#modalTambah">
+                            Add Overtime
+                        </button>
+
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0" id="listOvertime">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center">NIK</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Submit Date</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 align-middle text-center">Total</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 align-middle text-center">Paid</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 align-middle text-center">Type</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 align-middle text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+<!-- modal tambah overtime -->
+<div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="modalTambah" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="z-index: 10 !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTambah">Pengajuan Overtime</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-pane" id="tab-form" role="tabpanel">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Column -->
+                            <div class="col-lg-12 col-xlg-12 col-md-12">
+                                <div class="card">
+                                    <div class="tab-content">
+                                        <div id="bagian-form">
+                                            <form class="m-t-10" id="form-isian">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-group-float-label is-visible">Sisa Overtime</label>
+                                                        <input type="text" id="sisa" class="form-control" disabled>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-group-float-label is-visible">Date <span class="text-danger">*</span></label>
+                                                        <input type="date" name="tanggal" id="dateTxt" class="form-control">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-group-float-label is-visible">Start Overtime <span class="text-danger">*</span></label>
+                                                        <input class="form-control" id="startOvertimeTxt">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label class="form-group-float-label is-visible">End Overtime <span class="text-danger">*</span></label>
+                                                        <input class="form-control" id="endOvertimeTxt">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="form-group-float-label is-visible">Description</label>
+                                                        <input type="text" name="description" id="descriptionTxt" class="form-control">
+                                                    </div>
+
+                                                </div>
+                                                <div class="d-flex justify-content-start align-items-center">
+                                                    <button type="button" id="addOvertimeTemp" class="btn btn-primary ml-2 btn-sm"> Add Overtime</button>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-single-select datatable-pagination" id="tabel-overtime-temporary" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Submit Date</th>
+                                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Overtime</th>
+                                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Overtime</th>
+                                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tableTempList">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitOvertimeList">Request Overtime</button>
+            </div>
+        </div>
+    </div>
+</div>

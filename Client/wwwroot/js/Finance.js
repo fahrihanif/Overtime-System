@@ -46,11 +46,11 @@
                 render: function (data, type, row) {
                     if (data.status === "Approved") {
                         return `<span class="badge badge-pill badge-success">${data.status}</span>`;
-                    } else if (data.status === "Rejected"){
+                    } else if (data.status === "Rejected") {
                         return `<span class="badge badge-pill badge-danger">${data.status}</span>`;
-                    } else if (data.status === "Approval Manager"){
+                    } else if (data.status === "Approval Manager") {
                         return `<span class="badge badge-pill badge-info">${data.status}</span>`;
-                    }else {
+                    } else {
                         return `<span class="badge badge-pill badge-warning">${data.status}</span>`;
                     }
                 }
@@ -61,56 +61,8 @@
                     return `<button class="btn btn-info" data-toggle="modal" data-target="#modalDetail" onclick="GetDetailOvertimes('${data.nik}','${data.submit}','${data.status}')"><i class="fa-solid fa-info"></i></button>`;
                 }
             }
-        ],
-        dom: `<'row'<'col-md-2'l><'col-md-5'B><'col text-right'f>>
-              <'row'<'col-md-12'tr>>
-              <'row'<'col-md-5'i><'col-md-7'p>>`,
-        buttons: [
-            {
-                extend: 'collection',
-                text: '<i class="fa-solid fa-file-export"></i>',
-                className: 'btn btn-primary',
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fa-solid fa-file-excel"></i> excel',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        text: '<i class="fa-solid fa-file-csv"></i> csv',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        text: '<i class="fa-solid fa-file-pdf"></i> pdf',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa-solid fa-print"></i> print',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }
-                ]
-            },
-            {
-                extend: 'colvis',
-                text: `<i class="fa-solid fa-table-columns"></i>`,
-                columns: ':not(.noVis)',
-                className: 'btn btn-primary',
-            }
         ]
     });
-
-    table.buttons().container().appendTo("#tblOvertime .col-md-6:eq(0)");
 });
 
 function GetDetailOvertimes(nik, date, status) {

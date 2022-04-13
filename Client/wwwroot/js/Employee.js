@@ -1,42 +1,18 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-//clock picker
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("input[id=startOvertimeTxt]").clockpicker({
         placement: 'bottom',
         align: 'left',
         autoclose: true,
         default: 'now',
         donetext: "Select",
-        init: function () {
-            console.log("colorpicker initiated");
-        },
-        beforeShow: function () {
-            console.log("before show");
-        },
         afterShow: function () {
-            console.log("after show");
-        },
-        beforeHide: function () {
-            console.log("before hide");
-        },
-        afterHide: function () {
-            console.log("after hide");
-        },
-        beforeHourSelect: function () {
-            console.log("before hour selected");
-        },
-        afterHourSelect: function () {
-            console.log("after hour selected");
-        },
-        beforeDone: function () {
-            console.log("before done");
-        },
-        afterDone: function () {
-            console.log("after done");
+            $(".clockpicker-minutes").find(".clockpicker-tick").filter(function (index, element) {
+                return !($.inArray($(element).text(), ["0"]) != -1)
+            }).remove();
+
+            $(".clockpicker-hours").find(".clockpicker-tick").filter(function (index, element) {
+                return !(parseInt($(element).html()) >= 17 && parseInt($(element).html()) <= 22);
+            }).removeClass('clockpicker-tick').addClass('clockpicker-tick-disabled');
         }
     });
 
@@ -47,32 +23,16 @@ $(document).ready(function () {
         autoclose: true,
         default: 'now',
         donetext: "Select",
-        init: function () {
-            console.log("colorpicker initiated");
-        },
-        beforeShow: function () {
-            console.log("before show");
-        },
         afterShow: function () {
-            console.log("after show");
-        },
-        beforeHide: function () {
-            console.log("before hide");
-        },
-        afterHide: function () {
-            console.log("after hide");
-        },
-        beforeHourSelect: function () {
-            console.log("before hour selected");
-        },
-        afterHourSelect: function () {
-            console.log("after hour selected");
-        },
-        beforeDone: function () {
-            console.log("before done");
-        },
-        afterDone: function () {
-            console.log("after done");
+            console.log("text");
+            $(".clockpicker-minutes").find(".clockpicker-tick").filter(function (index, element) {
+                return !($.inArray($(element).text(), ["0"]) != -1)
+            }).remove();
+
+
+            $(".clockpicker-hours").find(".clockpicker-tick").filter(function (index, element) {
+                return !(parseInt($(element).html()) >= 17 && parseInt($(element).html()) <= 22);
+            }).removeClass('clockpicker-tick').addClass('clockpicker-tick-disabled');
         }
     });
 });
@@ -87,7 +47,7 @@ $(document).ready(function () {
 //Send List of Overtimes to controller  
 function PostRequest() {
     //Build List object that has to be sent to controller  
-    let  OvertimeList = []; // list object  
+    let OvertimeList = []; // list object  
     $('#tabel-overtime-temporary > tbody  > tr').each(function () { //loop in table list
 
         let Overtime = {}; // create new Overtime object and set its properties  
@@ -99,6 +59,7 @@ function PostRequest() {
         OvertimeList.push(Overtime); // add Overtime object to list object  
     });
 
+    console.log(OvertimeList);
     //Send list of Overtimes to controller via ajax  
     //$.ajax({
     //    url: '/home/SaveOvertimes',
@@ -133,7 +94,7 @@ function AddOvertimeT() {
 
 
     //Validate required fields  
-     // Main Error Messages Variable  
+    // Main Error Messages Variable  
 
     ////validate Summary  
     //if (Overtime.Summary.trim().length == 0) {
@@ -154,7 +115,7 @@ function AddOvertimeT() {
     //if (Errors.length > 0) {//if errors detected then notify user and cancel transaction  
     //    ShowMsn(Errors);
     //    return false; //exit function  
-   /* }*/
+    /* }*/
     //end validation required  
 
     //Validate no duplicated Titles  
@@ -189,12 +150,12 @@ function AddOvertimeT() {
 
     }
     //Add Overtime if title is not duplicated otherwise show error  
-   
+
     //    ClearMsn();
-        //Create Row element with provided data  
-         // Enable submit button  
-    
-   
+    //Create Row element with provided data  
+    // Enable submit button  
+
+
 }
 
 // clear all textboxes inside form  
@@ -290,6 +251,4 @@ $(document).ready(function () {
             }
         ]
     });
-
-    table.buttons().container().appendTo("#listOvertime .col-md-6:eq(0)");
 });
