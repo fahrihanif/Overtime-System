@@ -92,42 +92,6 @@ function AddOvertimeT() {
     Overtime.EndOvertime = $('#endOvertimeTxt').val();
     Overtime.Description = $('#descriptionTxt').val();
 
-
-    //Validate required fields  
-    // Main Error Messages Variable  
-
-    ////validate Summary  
-    //if (Overtime.Summary.trim().length == 0) {
-    //    Errors += "Please provide a summary.<br>";
-    //    $('#SummaryTxt').addClass("border-danger");
-    //} else {
-    //    $('#SummaryTxt').removeClass("border-danger");
-    //}
-
-    ////validate Year  
-    //if (Overtime.Year.trim().length < 4) {
-    //    Errors += "A valid Year is required.<br>";
-    //    $('#YearTxt').addClass("border-danger");
-    //} else {
-    //    $('#YearTxt').removeClass("border-danger");
-    //}
-
-    //if (Errors.length > 0) {//if errors detected then notify user and cancel transaction  
-    //    ShowMsn(Errors);
-    //    return false; //exit function  
-    /* }*/
-    //end validation required  
-
-    //Validate no duplicated Titles  
-    //var ExistTitle = false; // < -- Main indicator  
-    //$('#table-information > tbody  > tr').each(function () {
-    //    var Title = $(this).find('.TitleCol').text(); // get text of current row by class selector  
-    //    if (Overtime.Title.toLowerCase() == Title.toLowerCase()) { //Compare provided and existing title  
-    //        ExistTitle = true;
-    //        return false;
-    //    }
-    //});
-
     /*validate Start & End same*/
     if (Overtime.StartOvertime == Overtime.EndOvertime) {
         Errors + "Start and End Can't Same.<br>";
@@ -149,27 +113,12 @@ function AddOvertimeT() {
         $('#endOvertimeTxt').removeClass("border-danger");
 
     }
-    //Add Overtime if title is not duplicated otherwise show error  
-
-    //    ClearMsn();
-    //Create Row element with provided data  
-    // Enable submit button  
-
 
 }
 
 // clear all textboxes inside form  
 function ClearForm() {
     $('#form-isian input[type="text"]').val('');
-}
-
-//Msn label for notifications  
-function ShowMsn(message) {
-    $('#Msn').html(message);
-}
-//Clear text of Msn label  
-function ClearMsn() {
-    $('#Msn').html("");
 }
 
 //Delete selected row  
@@ -188,6 +137,39 @@ function CheckSubmitBtn() {
 }
 
 
+function GetDetailOvertimes(nik, date, status) {
+    if (status === "Rejected" || status === "Approved") {
+        $('.approval').hide();
+    } else {
+        $('.approval').show();
+    }
+
+    $.ajax({
+        type: "GET",
+        url: `https://localhost:44325/api/overtimes/detail/${nik}/${date}`,
+    }).done((result) => {
+        let text = "";
+        $.each(result.list, (key, val) => {
+            text += `<tr>
+                        <td class="text-center">${key + 1}</td>
+                        <td class="text-center">${Date.parse(val.startOvertime).toString("HH:mm")}</td>
+                        <td class="text-center">${Date.parse(val.endOvertime).toString("HH:mm")}</td>
+                        <td class="text-center">${val.description}</td>
+                    </tr>`;
+        })
+
+        $("#nik").val(result.nik);
+        $("#fullName").val(result.fullName);
+        $("#submitDate").val(Date.parse(result.submitDate).toString("dd MMMM yyyy"));
+        $("#salary").val(result.salary);
+        $("#paid").val(result.paid);
+        $("#type").val(result.type);
+        $("#tblDetail").html(text);
+
+    }).fail((error) => {
+        console.log(error)
+    })
+}
 //table data overtime 
 $(document).ready(function () {
     let table = $("#listOvertime").DataTable({
@@ -197,57 +179,60 @@ $(document).ready(function () {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "nik" },
-            { "data": "submit" },
-            { "data": "total" },
-            { "data": "paid" },
-            { "data": "type" },
-            { "data": "status" },
-        ],
-        dom: `<'row'<'col-md-2'l><'col-md-5'B><'col text-right'f>>
-              <'row'<'col-md-12'tr>>
-              <'row'<'col-md-5'i><'col-md-7'p>>`,
-        buttons: [
             {
-                extend: 'collection',
-                text: '<i class="fa-solid fa-file-export"></i>',
-                className: 'btn btn-primary',
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fa-solid fa-file-excel"></i> excel',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        text: '<i class="fa-solid fa-file-csv"></i> csv',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        text: '<i class="fa-solid fa-file-pdf"></i> pdf',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa-solid fa-print"></i> print',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }
-                ]
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data": "nik" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return Date.parse(data.submit).toString("dd MMMM yyyy");
+                }
             },
             {
-                extend: 'colvis',
-                text: `<i class="fa-solid fa-table-columns"></i>`,
-                columns: ':not(.noVis)',
-                className: 'btn btn-primary',
+                data: null,
+                render: function (data, type, row) {
+                    return data.total + " Jam";
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return "Rp. " + data.paid.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if (data.type === "Weekday") {
+                        return `<span class="badge badge-pill badge-primary">${data.type}</span>`;
+                    } else {
+                        return `<span class="badge badge-pill badge-warning">${data.type}</span>`;
+                    }
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    if (data.status === "Approved") {
+                        return `<span class="badge badge-pill badge-success">${data.status}</span>`;
+                    } else if (data.status === "Rejected") {
+                        return `<span class="badge badge-pill badge-danger">${data.status}</span>`;
+                    } else if (data.status === "Approval Manager") {
+                        return `<span class="badge badge-pill badge-info">${data.status}</span>`;
+                    } else {
+                        return `<span class="badge badge-pill badge-warning">${data.status}</span>`;
+                    }
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `<button class="btn btn-info" data-toggle="modal" data-target="#modalDetail" onclick="GetDetailOvertimes('${data.nik}','${data.submit}','${data.status}')"><i class="fa-solid fa-info"></i></button>`;
+                }
             }
         ]
     });
