@@ -16,7 +16,6 @@
         }
     });
 
-
     $("input[id=endOvertimeTxt]").clockpicker({
         placement: 'bottom',
         align: 'left',
@@ -51,34 +50,48 @@ function PostRequest() {
     $('#tabel-overtime-temporary > tbody  > tr').each(function () { //loop in table list
 
         let Overtime = {}; // create new Overtime object and set its properties  
-        Overtime.SubmitDate = this.cells[0].innerHTML;
-        Overtime.StartOvertime = this.cells[1].innerHTML;
-        Overtime.EndOvertime = this.cells[2].innerHTML;
-        Overtime.Description = this.cells[3].innerHTML;
+
+        Overtime.StartOvertime = this.cells[0].innerHTML;
+        Overtime.EndOvertime = this.cells[1].innerHTML;
+        Overtime.Description = this.cells[2].innerHTML;
+        Overtime.EmployeeId = 2022002;
 
         OvertimeList.push(Overtime); // add Overtime object to list object  
     });
 
-    console.log(OvertimeList);
+    let Request = {};
+    Request.SubmitDate = $('#dateTxt').val();
+    Request.Detail = OvertimeList;
+
+    console.log(Request);
     //Send list of Overtimes to controller via ajax  
-    //$.ajax({
-    //    url: '/home/SaveOvertimes',
-    //    type: "POST",
-    //    data: JSON.stringify(OvertimesList),
-    //    contentType: "application/json",
-    //    dataType: "json",
-    //    success: function (response) {
-    //        // Process response from controller  
-    //        if (response === true) {
-    //            ShowMsn("Overtimes have been saved successfully."); // show success notification  
-    //            ClearForm(); //clear form fields  
-    //            $('#table-body').empty(); // clear table items  
-    //            CheckSubmitBtn(); // disable submit button  
-    //        } else {
-    //            ShowMsn("Ooops, an error has ocurrer while processing the transaction.");
-    //        }
-    //    }
-    //});
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        url: "https://localhost:44325/api/overtimes/request",
+        type: "POST",
+        data: JSON.stringify(Request),
+        contentType: "application/json",
+        dataType: "json"
+    }).done((result) => {
+        Swal.fire({
+            title: 'Requested!',
+            icon: 'success',
+            text: result.responseJSON.message,
+            showConfirmButton: false,
+            timer: 1500
+        })
+        $('#listOvertime').DataTable().ajax.reload();
+        $('#modalTambah').modal('hide');
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.responseJSON.message,
+        })
+    });
 
 }
 
@@ -87,7 +100,6 @@ function AddOvertimeT() {
     let Errors = "";
     //Create Overtime Object  
     let Overtime = {};
-    Overtime.SubmitDate = $('#dateTxt').val();
     Overtime.StartOvertime = $('#startOvertimeTxt').val();
     Overtime.EndOvertime = $('#endOvertimeTxt').val();
     Overtime.Description = $('#descriptionTxt').val();
@@ -100,7 +112,6 @@ function AddOvertimeT() {
         console.log(Errors);
     } else {
         let Row = $('<tr>');
-        $('<td>').html(Overtime.SubmitDate).appendTo(Row);
         $('<td>').html(Overtime.StartOvertime).appendTo(Row);
         $('<td>').html(Overtime.EndOvertime).appendTo(Row);
         $('<td>').html(Overtime.Description).appendTo(Row);
