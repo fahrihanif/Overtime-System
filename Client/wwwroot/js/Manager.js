@@ -66,7 +66,7 @@
 });
 
 function GetDetailOvertimes(nik, date, status) {
-    if (status === "Rejected" || status === "Approved") {
+    if (status === "Rejected" || status === "Approved" || status === "ApprovalManager") {
         $('.approval').hide();
     } else {
         $('.approval').show();
@@ -104,7 +104,7 @@ function GetDetailOvertimes(nik, date, status) {
             ovr.type = result.type
 
             if (info === "accepted") {
-                ovr.status = 2;
+                ovr.status = 1;
             } else {
                 ovr.status = 3;
             }
@@ -114,6 +114,7 @@ function GetDetailOvertimes(nik, date, status) {
     }).fail((error) => {
         console.log(error)
     })
+    console.log(GetDetailOvertimes);
 }
 
 function Approval(ovr) {

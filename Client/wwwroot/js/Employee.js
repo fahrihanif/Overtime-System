@@ -221,7 +221,7 @@ $(document).ready(function () {
                         return `<span class="badge badge-pill badge-success">${data.status}</span>`;
                     } else if (data.status === "Rejected") {
                         return `<span class="badge badge-pill badge-danger">${data.status}</span>`;
-                    } else if (data.status === "Approval Manager") {
+                    } else if (data.status === "ApprovalManager") {
                         return `<span class="badge badge-pill badge-info">${data.status}</span>`;
                     } else {
                         return `<span class="badge badge-pill badge-warning">${data.status}</span>`;
@@ -231,7 +231,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return `<button class="btn btn-info" data-toggle="modal" data-target="#modalDetail" onclick="GetDetailOvertimes('${data.nik}','${data.submit}','${data.status}')"><i class="fa-solid fa-info"></i></button>`;
+                    return `<button class="btn btn-info" data-toggle="modal" data-target="#modalDetailEmp" onclick="GetDetailOvertimes('${data.nik}','${data.submit}','${data.status}')"><i class="fa-solid fa-info"></i></button>`;
                 }
             }
         ]
