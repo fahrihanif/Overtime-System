@@ -59,7 +59,7 @@ namespace API.Repository.Data
                 NIK = s.Key.NIK,
                 Submit = s.Select(s => s.Submit).First(),
                 Total = s.Sum(s => s.Total),
-                Paid = s.Sum(s => s.Paid),
+                Paid = s.Min(s => s.Paid),
                 Type = s.Select(s => s.Type).First(),
                 Status = s.Select(s => s.Status).First(),
             });
@@ -82,7 +82,7 @@ namespace API.Repository.Data
                 NIK = s.Key.NIK,
                 Submit = s.Select(s => s.Submit).First(),
                 Total = s.Sum(s => s.Total),
-                Paid = s.Sum(s => s.Paid),
+                Paid = s.Min(s => s.Paid),
                 Type = s.Select(s => s.Type).First(),
                 Status = s.Select(s => s.Status).First(),
             });
@@ -112,12 +112,59 @@ namespace API.Repository.Data
             {
                 if ((x.FirstOrDefault(g => g.NIK == overtime.Detail[0].EmployeeId && g.Submit == overtime.SubmitDate)) == null)
                 {
+                    var today = overtime.SubmitDate.DayOfWeek;
+                    var salary = _context.Employees.Where(w => w.NIK == overtime.Detail[0].EmployeeId).Select(s => s.Salary).Single();
+                    var overtimePerHour = salary * 1 / 173;
+                    var _total = 0.0;
+                    var paid = 0;
+                    Types type = 0;
+
+                    foreach (var item in overtime.Detail)
+                    {
+                        _total += Convert.ToInt32((item.EndOvertime - item.StartOvertime).TotalHours);
+                    }
+
+                    int total = (int)Math.Round(_total, MidpointRounding.AwayFromZero);
+
+                    if (today == DayOfWeek.Sunday || today == DayOfWeek.Saturday)
+                    {
+                        type = Types.Weekend;
+
+                        for (int i = 0; i < total; i++)
+                        {
+                            if (i < 8)
+                            {
+                                paid += 2 * overtimePerHour;
+                            } else if (i == 8)
+                            {
+                                paid += 3 * overtimePerHour;
+                            } else
+                            {
+                                paid += 4 * overtimePerHour;
+                            }
+                        }
+                    } else
+                    {
+                        type = Types.Weekday;
+
+                        for (int i = 0; i < total; i++)
+                        {
+                            if (i < 1)
+                            {
+                                paid += Convert.ToInt32(1.5 * overtimePerHour);
+                            } else
+                            {
+                                paid += 2 * overtimePerHour;
+                            }
+                        }
+                    }
+
                     var o = new Overtime
                     {
                         SubmitDate = overtime.SubmitDate,
-                        Status = overtime.Status,
-                        Paid = overtime.Paid,
-                        Type = overtime.Type
+                        Status = Status.Pending,
+                        Paid = paid,
+                        Type = type
                     };
                     _context.Overtimes.Add(o);
                     _context.SaveChanges();
