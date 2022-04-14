@@ -87,7 +87,7 @@ function PostRequest() {
         $('#modalTambah').modal('hide');
     }).fail((error) => {
         Swal.fire({
-            icon: 'error',
+            icon: 'warning',
             title: 'Oops...',
             text: error.responseJSON.message,
         })
