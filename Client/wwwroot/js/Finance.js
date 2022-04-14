@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿let nik = $("#sesNIK").text();
+$(document).ready(function () {
     let table = $("#tblOvertime").DataTable({
         "ajax": {
             "url": "https://localhost:44325/api/overtimes/list/",
