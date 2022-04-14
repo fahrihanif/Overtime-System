@@ -2,17 +2,21 @@
 using API.ViewModels;
 using Client.Base;
 using Client.Repository.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Client.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : BaseController<Account, HomeRepository, int>
     {
         private readonly HomeRepository _repository;
@@ -64,10 +68,29 @@ namespace Client.Controllers
             }
 
             HttpContext.Session.SetString("JWToken", token);
-            //HttpContext.Session.SetString("Name", jwtHandler.GetName(token));
-            //HttpContext.Session.SetString("ProfilePicture", "assets/img/theme/user.png");
+            var claim = ExtractClaims(token);
+            var role = claim.Where(claim => claim.Type == "role").Select(s => s.Value).ToList();
 
-            return RedirectToAction("index", "admin");
+            if (role.Contains("Finance"))
+            {
+                return RedirectToAction("index", "finance");
+            } 
+            else if (role.Contains("Manager"))
+            {
+                return RedirectToAction("index", "manager");
+            }
+            else
+            {
+                return RedirectToAction("index", "employee");
+            }
+        }
+
+        public IEnumerable<Claim> ExtractClaims(string jwtToken)
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken securityToken = (JwtSecurityToken)tokenHandler.ReadToken(jwtToken);
+            IEnumerable<Claim> claims = securityToken.Claims;
+            return claims;
         }
     }
 }
