@@ -79,12 +79,12 @@ function PostRequest() {
         Swal.fire({
             title: 'Requested!',
             icon: 'success',
-            text: result.responseJSON.message,
+            text: result.message,
             showConfirmButton: false,
             timer: 1500
         })
         $('#listOvertime').DataTable().ajax.reload();
-        $('#modalTambah').modal('hide');
+        $("#modalTambah .close").click()
     }).fail((error) => {
         Swal.fire({
             icon: 'warning',
