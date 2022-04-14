@@ -96,6 +96,11 @@ namespace API.Repository.Data
             return 0;
         }
 
+        public string userNIK(string email)
+        {
+            return _context.Accounts.SingleOrDefault(e => e.Email == email).NIK;
+        }
+
         public List<string> UserRole(string email)
         {
             var checkNIK = _context.Accounts.SingleOrDefault(e => e.Email == email).NIK;

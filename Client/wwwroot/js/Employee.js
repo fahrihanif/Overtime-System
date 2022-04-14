@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿let nik = $("#sesNIK").text();
+$(document).ready(function () {
     $("input[id=startOvertimeTxt]").clockpicker({
         placement: 'bottom',
         align: 'left',
@@ -54,7 +55,7 @@ function PostRequest() {
         Overtime.StartOvertime = this.cells[0].innerHTML;
         Overtime.EndOvertime = this.cells[1].innerHTML;
         Overtime.Description = this.cells[2].innerHTML;
-        Overtime.EmployeeId = 2022002;
+        Overtime.EmployeeId = nik;
 
         OvertimeList.push(Overtime); // add Overtime object to list object  
     });
@@ -185,7 +186,7 @@ function GetDetailOvertimes(nik, date, status) {
 $(document).ready(function () {
     let table = $("#listOvertime").DataTable({
         "ajax": {
-            "url": "https://localhost:44325/api/overtimes/list/",
+            "url": `https://localhost:44325/api/overtimes/list/${nik}`,
             "dataType": "Json",
             "dataSrc": ""
         },

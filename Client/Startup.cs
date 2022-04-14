@@ -37,6 +37,8 @@ namespace Client
                 options.IdleTimeout = TimeSpan.FromMinutes(10);//set 10 menit   
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllersWithViews();
             //Add scoped
             services.AddScoped<HomeRepository>();

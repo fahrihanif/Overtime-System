@@ -90,7 +90,8 @@ namespace API.Controllers
 
                         var claims = new List<Claim>()
                         {
-                            new Claim("email", login.Email)
+                            new Claim("email", login.Email),
+                            new Claim("nik", _repository.userNIK(login.Email))
                         };
 
                         foreach (var i in role)

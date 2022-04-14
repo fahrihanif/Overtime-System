@@ -24,6 +24,7 @@ namespace Client.Controllers
         {
             _repository = repository;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -61,6 +62,9 @@ namespace Client.Controllers
         {
             var jwtToken = await _repository.Auth(login);
             var token = jwtToken.IdToken;
+            var claim = ExtractClaims(token);
+            var role = claim.Where(claim => claim.Type == "role").Select(s => s.Value).ToList();
+            var nik = claim.Where(claim => claim.Type == "nik").Select(s => s.Value).Single();
 
             if (token == null)
             {
@@ -68,8 +72,9 @@ namespace Client.Controllers
             }
 
             HttpContext.Session.SetString("JWToken", token);
-            var claim = ExtractClaims(token);
-            var role = claim.Where(claim => claim.Type == "role").Select(s => s.Value).ToList();
+            HttpContext.Session.SetString("nik", nik);
+
+            
 
             if (role.Contains("Finance"))
             {
