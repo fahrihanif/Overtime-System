@@ -1,4 +1,14 @@
 ﻿let nik = $("#sesNIK").text();
+let jumlSisa;
+
+$.ajax({
+    url: `https://localhost:44325/api/overtimes/remaining/${nik}`,
+    type: "GET"
+}).done((result) => {
+    $("#sisa").val(result[0].remaining + " Jam");
+    jumlSisa = result[0].remaining;
+})
+
 $(document).ready(function () {
     $("input[id=startOvertimeTxt]").clockpicker({
         placement: 'bottom',
@@ -6,14 +16,9 @@ $(document).ready(function () {
         autoclose: true,
         default: 'now',
         donetext: "Select",
-        afterShow: function () {
-            $(".clockpicker-minutes").find(".clockpicker-tick").filter(function (index, element) {
-                return !($.inArray($(element).text(), ["0"]) != -1)
-            }).remove();
-
-            $(".clockpicker-hours").find(".clockpicker-tick").filter(function (index, element) {
-                return !(parseInt($(element).html()) >= 17 && parseInt($(element).html()) <= 22);
-            }).removeClass('clockpicker-tick').addClass('clockpicker-tick-disabled');
+        afterHourSelect: function () {
+            var c = end.data();
+            $('input[id=startOvertimeTxt]').val(c.clockpicker.hours + ':00');
         }
     });
 
@@ -64,36 +69,46 @@ function PostRequest() {
     Request.SubmitDate = $('#dateTxt').val();
     Request.Detail = OvertimeList;
 
-    console.log(Request);
-    //Send list of Overtimes to controller via ajax  
-    $.ajax({
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        url: "https://localhost:44325/api/overtimes/request",
-        type: "POST",
-        data: JSON.stringify(Request),
-        contentType: "application/json",
-        dataType: "json"
-    }).done((result) => {
-        Swal.fire({
-            title: 'Requested!',
-            icon: 'success',
-            text: result.message,
-            showConfirmButton: false,
-            timer: 1500
-        })
-        $('#listOvertime').DataTable().ajax.reload();
-        $("#modalTambah .close").click()
-    }).fail((error) => {
+    if (jumlSisa <= 0) {
         Swal.fire({
             icon: 'warning',
             title: 'Oops...',
-            text: error.responseJSON.message,
+            text: 'Your remaining overtime hours have passed the limit',
         })
-    });
+    } else {
+        //Send list of Overtimes to controller via ajax  
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            url: "https://localhost:44325/api/overtimes/request",
+            type: "POST",
+            data: JSON.stringify(Request),
+            contentType: "application/json",
+            dataType: "json"
+        }).done((result) => {
+            Swal.fire({
+                title: 'Requested!',
+                icon: 'success',
+                text: result.message,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            $('#listOvertime').DataTable().ajax.reload();
+            $("#modalTambah .close").click()
+        }).fail((error) => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: error.responseJSON.message,
+            })
+        });
+    }
+}
 
+function msToTime(ms) {
+    return (ms / (1000 * 60 * 60)).toFixed(1);
 }
 
 //Add item to temp table   
@@ -105,6 +120,9 @@ function AddOvertimeT() {
     Overtime.EndOvertime = $('#endOvertimeTxt').val();
     Overtime.Description = $('#descriptionTxt').val();
 
+    let sisaOvr = Date.parse(Overtime.EndOvertime) - Date.parse(Overtime.StartOvertime);
+    jumlSisa -= parseInt(msToTime(sisaOvr))
+    $("#sisa").val(jumlSisa + " Jam");
     /*validate Start & End same*/
     if (Overtime.StartOvertime == Overtime.EndOvertime) {
         Errors + "Start and End Can't Same.<br>";
@@ -116,14 +134,13 @@ function AddOvertimeT() {
         $('<td>').html(Overtime.StartOvertime).appendTo(Row);
         $('<td>').html(Overtime.EndOvertime).appendTo(Row);
         $('<td>').html(Overtime.Description).appendTo(Row);
-        $('<td>').html("<div class='text-center'><button class='btn btn-danger btn-sm' onclick='Delete($(this))'>Remove</button></div>").appendTo(Row);
+        $('<td>').html(`<div class='text-center'><button class='btn btn-danger btn-sm' onclick='Delete($(this), ${sisaOvr})'>Remove</button></div>`).appendTo(Row);
 
         //Append row to table's body  
         $('#tableTempList').append(Row);
         CheckSubmitBtn();
         $('#startOvertimeTxt').removeClass("border-danger");
         $('#endOvertimeTxt').removeClass("border-danger");
-
     }
 
 }
@@ -134,8 +151,10 @@ function ClearForm() {
 }
 
 //Delete selected row  
-function Delete(row) { // remove row from table  
+function Delete(row, sisaOvr) { // remove row from table  
     row.closest('tr').remove();
+    jumlSisa += parseInt(msToTime(sisaOvr))
+    $("#sisa").val(jumlSisa + " Jam");
     CheckSubmitBtn();
 }
 

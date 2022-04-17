@@ -15,3 +15,31 @@
         });
     }, false);
 })();
+
+$(document).ready(function () {
+    let email = $("#emailOtp").val();
+    
+    $("#sendOtp").click(function () {
+        console.log(email);
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            url: `https://localhost:44325/api/accounts/forgotpassword/${email}`,
+            type: "PUT",
+            contentType: "application/json",
+            dataType: "json"
+        }).done((result) => {
+            Swal.fire(
+                'Success!',
+                'OTP code has send to your email!',
+                'success'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = "/ChangePassword";
+                }
+            })
+        })
+    });
+});

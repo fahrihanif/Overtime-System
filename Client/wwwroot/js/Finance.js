@@ -2,7 +2,7 @@
 $(document).ready(function () {
     let table = $("#tblOvertime").DataTable({
         "ajax": {
-            "url": "https://localhost:44325/api/overtimes/list/",
+            "url": "https://localhost:44325/api/overtimes/listfinance/",
             "dataType": "Json",
             "dataSrc": ""
         },
