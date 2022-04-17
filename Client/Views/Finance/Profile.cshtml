@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "_FinanceLayout";
+}
+
+<div class="main-content position-relative max-height-vh-100 h-100">
+    <div class="card shadow-lg mx-4 card-profile-bottom">
+        <div class="card-body p-3">
+            <div class="row gx-4">
+                <div class="col-auto">
+                    <div class="avatar avatar-xl position-relative">
+                        <img src="~/lib/img/team-1.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    </div>
+                </div>
+                <div class="col-auto my-auto">
+                    <div class="h-100">
+                        <h5 class="mb-1">
+                            Nama User
+                        </h5>
+                        <p class="mb-0 font-weight-bold text-sm">
+                            Finance
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-4 content-center" id="general_nfo">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0">Edit Profile</p>
+                            <button class="btn btn-primary btn-sm ms-auto" id="editProfile" data-toggle="modal" data-target="#modalEdit">Edit</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-uppercase text-sm">User Information</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">First Name</label>
+                                    <input class="form-control" type="text" value="First Name Employee" id="FirstName" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Last Name</label>
+                                    <input class="form-control" type="text" value="Last Name Employee" id="LastName" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Phone</label>
+                                    <input class="form-control" type="text" value="+62 809 987 123 " id="Phone" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Gender</label><br />
+                                    <select class="form-control" disabled>
+                                        <option class="form-control" value="0">Male</option>
+                                        <option class="form-control" value="1">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Salary</label>
+                                    <input class="form-control" type="text" value="Rp.5.000.000" id="Salary" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Job Id</label>
+                                    <input class="form-control" type="text" value="1" id="JobId" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--modal edit profile-->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEdit">Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-pane" id="tab-form" role="tabpanel">
+                    <div class="card-body">
+                        <p class="text-uppercase text-sm">User Information</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">First Name</label>
+                                    <input class="form-control" type="text" value="First Name Employee" id="FirstName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Last Name</label>
+                                    <input class="form-control" type="text" value="Last Name Employee" id="LastName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Phone</label>
+                                    <input class="form-control" type="text" value="+62 809 987 123 " id="Phone">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Gender</label><br />
+                                    <select class="form-control" disabled>
+                                        <option class="form-control" value="0">Male</option>
+                                        <option class="form-control" value="1">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Salary</label>
+                                    <input class="form-control" type="text" value="Rp.5.000.000" id="Salary">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Job Id</label>
+                                    <input class="form-control" type="text" value="1" id="JobId">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveEdit">Save Change</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

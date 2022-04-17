@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "EmpList";
+    Layout = "_FinanceLayout";
+}
+
+
+<div class="container-fluid py-12">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6 style="display: inline-block"> Employees Table</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-2">
+                        <table class="table align-items-center mb-0" id="tblEmployee">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nik</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">First Name</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Name</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employee" class="align-middle text-center"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal detail overtime -->
+<div class="modal fade" id="detailEmp" tabindex="-1" role="dialog" aria-labelledby="detailEmp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailEmp">Request Overtime</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-pane" id="tab-form" role="tabpanel">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Column -->
+                            <div class="col-lg-12 col-xlg-12 col-md-12">
+                                <div class="card">
+                                    <div class="tab-content">
+                                        <div id="bagian-form">
+                                            <form class="m-t-10" id="form-isian">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="example-text-input" class="form-control-label">First Name</label>
+                                                                <input class="form-control" type="text" value="First Name Employee" id="FirstName" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="example-text-input" class="form-control-label">Last Name</label>
+                                                                <input class="form-control" type="text" value="Last Name Employee" id="LastName" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="example-text-input" class="form-control-label">Phone</label>
+                                                                <input class="form-control" type="text" value="+62 809 987 123 " id="Phone" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="example-text-input" class="form-control-label">Gender</label><br />
+                                                                <select class="form-control" disabled>
+                                                                    <option class="form-control" value="0">Male</option>
+                                                                    <option class="form-control" value="1">Female</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="example-text-input" class="form-control-label">Salary</label>
+                                                                <input class="form-control" type="text" value="Rp.5.000.000" id="Salary" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="example-text-input" class="form-control-label">Job Id</label>
+                                                                <input class="form-control" type="text" value="1" id="JobId" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success approval" id="saveChange">Save Change</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

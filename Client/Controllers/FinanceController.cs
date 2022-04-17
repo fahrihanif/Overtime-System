@@ -18,6 +18,14 @@ namespace Client.Controllers
         public IActionResult List()
         {
             return View();
+        } 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+        public IActionResult EmpList()
+        {
+            return View();
         }
     }
 }
