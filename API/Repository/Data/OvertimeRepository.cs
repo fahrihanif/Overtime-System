@@ -65,6 +65,29 @@ namespace API.Repository.Data
             });
         }
 
+        public IEnumerable ListFinanceOvertime()
+        {
+            var x = _context.EmployeeOvertimes.Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new
+            {
+                NIK = eo.EmployeeId,
+                Submit = o.SubmitDate,
+                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours,
+                Paid = o.Paid,
+                Type = o.Type.ToString(),
+                Status = o.Status.ToString()
+            }).ToList();
+
+            return x.GroupBy(g => new { g.NIK, g.Submit }).Select(s => new
+            {
+                NIK = s.Key.NIK,
+                Submit = s.Select(s => s.Submit).First(),
+                Total = s.Sum(s => s.Total),
+                Paid = s.Min(s => s.Paid),
+                Type = s.Select(s => s.Type).First(),
+                Status = s.Select(s => s.Status).First(),
+            }).Where(w => !(w.Status == "Pending"));
+        }
+
         public IEnumerable ListOvertime()
         {
             var x = _context.EmployeeOvertimes.Join(_context.Overtimes, eo => eo.OvertimeId, o => o.Id, (eo, o) => new
@@ -87,7 +110,7 @@ namespace API.Repository.Data
                 Status = s.Select(s => s.Status).First(),
             });
         }
-        public IEnumerable RemainingOvertime()
+        public IEnumerable RemainingOvertime(string id)
         {
             return _context.Overtimes.Where(w => w.Type == Types.Weekday).Join(_context.EmployeeOvertimes, o => o.Id, eo => eo.OvertimeId, (o, eo) => new
             {
@@ -97,7 +120,7 @@ namespace API.Repository.Data
             {
                 NIK = s.Key,
                 Remaining = 40 - s.Sum(s => s.Total)
-            });
+            }).Where(w => w.NIK == id);
         }
 
         public int Request(AddOvertimeVM overtime)

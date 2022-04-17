@@ -39,6 +39,22 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("ListFinance")]
+        public ActionResult ListFinanceOvertime()
+        {
+            try
+            {
+                var post = _repository.ListFinanceOvertime();
+                return post == null
+                    ? NotFound(new { message = "Data Failed to Change Please Check Again" })
+                    : (ActionResult)Ok(_repository.ListFinanceOvertime());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         [HttpGet("List")]
         public ActionResult ListOvertime()
         {
@@ -71,15 +87,15 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("Remaining")]
-        public ActionResult RemainingOvertime()
+        [HttpGet("Remaining/{id}")]
+        public ActionResult RemainingOvertime(string id)
         {
             try
             {
-                var post = _repository.RemainingOvertime();
+                var post = _repository.RemainingOvertime(id);
                 return post == null
                     ? NotFound(new { message = "Data Failed to Change Please Check Again" })
-                    : (ActionResult)Ok(_repository.RemainingOvertime());
+                    : (ActionResult)Ok(_repository.RemainingOvertime(id));
             }
             catch (Exception e)
             {
