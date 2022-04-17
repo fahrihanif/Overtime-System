@@ -1,4 +1,13 @@
 ﻿let nik = $("#sesNIK").text();
+
+$.ajax({
+    url: `https://localhost:44325/api/accounts/master/${nik}`,
+    type: "GET"
+}).done((result) => {
+    $("#DashJob").text(result[0].jobTitle)
+    $("#DashName").text(result[0].fullName)
+})
+
 $(document).ready(function () {
     let table = $("#tblOvertime").DataTable({
         "ajax": {

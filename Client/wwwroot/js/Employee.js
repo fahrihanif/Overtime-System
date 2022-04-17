@@ -9,6 +9,14 @@ $.ajax({
     jumlSisa = result[0].remaining;
 })
 
+$.ajax({
+    url: `https://localhost:44325/api/accounts/master/${nik}`,
+    type: "GET"
+}).done((result) => {
+    $("#DashJob").text(result[0].jobTitle)
+    $("#DashName").text(result[0].fullName)
+})
+
 $(document).ready(function () {
     $("input[id=startOvertimeTxt]").clockpicker({
         placement: 'bottom',

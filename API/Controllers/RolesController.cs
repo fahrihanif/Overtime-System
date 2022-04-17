@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Finance")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController : BaseController<Role, RoleRepository, int>

@@ -130,6 +130,25 @@ namespace API.Repository.Data
             return 0;
         }
 
+        public IEnumerable MasterEmployeeDataId(string id)
+        {
+
+            return _context.Employees
+                .Join(_context.Accounts, e => e.NIK, a => a.NIK,
+                (e, a) => new { e, a })
+                .Join(_context.Jobs, ea => ea.e.JobId, j => j.Id,
+                (ea, j) => new
+                {
+                    NIK = ea.e.NIK,
+                    FullName = (ea.e.FirstName + " " + ea.e.LastName),
+                    Phone = ea.e.Phone,
+                    Gender = ea.e.Gender.ToString(),
+                    Email = ea.a.Email,
+                    Salary = ea.e.Salary,
+                    JobTitle = j.Title,
+                }).Where(w => w.NIK == id);
+        }
+
         public IEnumerable MasterEmployeeData()
         {
 

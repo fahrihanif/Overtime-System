@@ -31,6 +31,24 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("Master/{id}")]
+        public ActionResult ChangePassword(string id)
+        {
+            try
+            {
+                var get = _repository.MasterEmployeeDataId(id);
+                return get == null
+                    ? NotFound(new { message = "Data Empty" })
+                    : (ActionResult)Ok(_repository.MasterEmployeeDataId(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+        }
+
+        [AllowAnonymous]
         [HttpPut("ChangePassword")]
         public ActionResult ChangePassword(ChangePasswordVM change)
         {
@@ -54,8 +72,7 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPut("ForgotPassword")]
-        [Route("")]
+        [HttpPut("ForgotPassword/{email}")]
         public ActionResult ForgotPassword(string email)
         {
             try

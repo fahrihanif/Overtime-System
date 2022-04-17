@@ -29,19 +29,5 @@ namespace Client.Repository.Data
                 BaseAddress = new Uri(address.link)
             };
         }
-
-        //public async Task<List<ListOvertimeVM>> GetListOvertime()
-        //{
-        //    List<ListOvertimeVM> entities = new List<ListOvertimeVM>();
-        //    var token = _contextAccessor.HttpContext.Session.GetString("JWToken");
-
-        //    using (var response = await httpClient.GetAsync(address.link + request + "List/"))
-        //    {
-        //        string apiResponse = await response.Content.ReadAsStringAsync();
-        //        entities = JsonConvert.DeserializeObject<List<ListOvertimeVM>>(apiResponse);
-        //    }
-
-        //    return entities;
-        //}
     }
 }
