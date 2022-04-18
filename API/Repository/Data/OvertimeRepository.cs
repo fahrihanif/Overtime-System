@@ -48,7 +48,7 @@ namespace API.Repository.Data
             {
                 NIK = eo.EmployeeId,
                 Submit = o.SubmitDate,
-                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours,
+                Total = (int)Math.Round((eo.EndOvertime - eo.StartOvertime).TotalHours, MidpointRounding.AwayFromZero),
                 Paid = o.Paid,
                 Type = o.Type.ToString(),
                 Status = o.Status.ToString()
@@ -71,7 +71,7 @@ namespace API.Repository.Data
             {
                 NIK = eo.EmployeeId,
                 Submit = o.SubmitDate,
-                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours,
+                Total = (int)Math.Round((eo.EndOvertime - eo.StartOvertime).TotalHours, MidpointRounding.AwayFromZero),
                 Paid = o.Paid,
                 Type = o.Type.ToString(),
                 Status = o.Status.ToString()
@@ -94,7 +94,7 @@ namespace API.Repository.Data
             {
                 NIK = eo.EmployeeId,
                 Submit = o.SubmitDate,
-                Total = (eo.EndOvertime - eo.StartOvertime).TotalHours,
+                Total = (int)Math.Round((eo.EndOvertime - eo.StartOvertime).TotalHours, MidpointRounding.AwayFromZero),
                 Paid = o.Paid,
                 Type = o.Type.ToString(),
                 Status = o.Status.ToString()
