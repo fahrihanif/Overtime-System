@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ThreadSafeRandomizer;
 
 namespace API.Repository.Data
 {
@@ -74,7 +74,7 @@ namespace API.Repository.Data
                     NIK = account.NIK,
                     Email = account.Email,
                     Password = account.Password,
-                    OTP = new Random().Next(100000, 999999),
+                    OTP = ThreadSafeRandom.Instance.Next(100000, 999999),
                     IsUsed = false
                 };
                 Update(acc);
